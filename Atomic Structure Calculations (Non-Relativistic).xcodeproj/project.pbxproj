@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		528DF9D1280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DF9D0280F140A0045ECC4 /* R Matrix Element Subroutine.swift */; };
+		528DF9D2280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DF9D0280F140A0045ECC4 /* R Matrix Element Subroutine.swift */; };
+		528DF9D3280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DF9D0280F140A0045ECC4 /* R Matrix Element Subroutine.swift */; };
+		528DF9D4280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DF9D0280F140A0045ECC4 /* R Matrix Element Subroutine.swift */; };
 		A5B86A642754987F00E288FA /* Mesh_Potential_Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B86A5C2754987F00E288FA /* Mesh_Potential_Initialization.swift */; };
 		A5B86A652754987F00E288FA /* Mesh_Potential_Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B86A5C2754987F00E288FA /* Mesh_Potential_Initialization.swift */; };
 		A5B86A662754987F00E288FA /* Mesh_Potential_Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B86A5C2754987F00E288FA /* Mesh_Potential_Initialization.swift */; };
@@ -103,6 +107,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		528DF9D0280F140A0045ECC4 /* R Matrix Element Subroutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "R Matrix Element Subroutine.swift"; sourceTree = "<group>"; };
 		A5B86A5C2754987F00E288FA /* Mesh_Potential_Initialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh_Potential_Initialization.swift; sourceTree = "<group>"; };
 		A5B86A5D2754987F00E288FA /* Output_File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Output_File.swift; sourceTree = "<group>"; };
 		A5B86A5E2754987F00E288FA /* HFS_textbook_values.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HFS_textbook_values.swift; sourceTree = "<group>"; };
@@ -190,6 +195,7 @@
 				A5B86A602754987F00E288FA /* Functional_Functions.swift */,
 				A5B86A8927552C4A00E288FA /* TextExportDocument.swift */,
 				A5B86A5E2754987F00E288FA /* HFS_textbook_values.swift */,
+				528DF9D0280F140A0045ECC4 /* R Matrix Element Subroutine.swift */,
 				A5B86A622754987F00E288FA /* Input_File.swift */,
 				A5B86A5C2754987F00E288FA /* Mesh_Potential_Initialization.swift */,
 				A5B86A5D2754987F00E288FA /* Output_File.swift */,
@@ -456,6 +462,7 @@
 				D292F178275493660008A716 /* ContentView.swift in Sources */,
 				A5B86A642754987F00E288FA /* Mesh_Potential_Initialization.swift in Sources */,
 				D292F176275493660008A716 /* Atomic_Structure_Calculations__Non_Relativistic_App.swift in Sources */,
+				528DF9D1280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +487,7 @@
 				D292F179275493660008A716 /* ContentView.swift in Sources */,
 				A5B86A652754987F00E288FA /* Mesh_Potential_Initialization.swift in Sources */,
 				D292F177275493660008A716 /* Atomic_Structure_Calculations__Non_Relativistic_App.swift in Sources */,
+				528DF9D2280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +508,7 @@
 				A5B86A8C27552C4A00E288FA /* TextExportDocument.swift in Sources */,
 				A5B86A662754987F00E288FA /* Mesh_Potential_Initialization.swift in Sources */,
 				D292F1BE275496580008A716 /* CalculatePlotData.swift in Sources */,
+				528DF9D3280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */,
 				D292F19F2754953B0008A716 /* CorePlot.swift in Sources */,
 				A5B86A6A2754987F00E288FA /* Output_File.swift in Sources */,
 				A5B86A822754987F00E288FA /* Self_Consistent_Potentials.swift in Sources */,
@@ -523,6 +532,7 @@
 				A5B86A8D27552C4A00E288FA /* TextExportDocument.swift in Sources */,
 				A5B86A672754987F00E288FA /* Mesh_Potential_Initialization.swift in Sources */,
 				D292F1BF275496580008A716 /* CalculatePlotData.swift in Sources */,
+				528DF9D4280F140A0045ECC4 /* R Matrix Element Subroutine.swift in Sources */,
 				D292F1A02754953B0008A716 /* CorePlot.swift in Sources */,
 				A5B86A6B2754987F00E288FA /* Output_File.swift in Sources */,
 				A5B86A832754987F00E288FA /* Self_Consistent_Potentials.swift in Sources */,
@@ -662,7 +672,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -684,7 +694,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -709,7 +719,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -733,7 +743,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -754,7 +764,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -776,7 +786,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -800,7 +810,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Tests macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -822,7 +832,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = V59RVGUYZD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Tests macOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

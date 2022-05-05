@@ -61,7 +61,7 @@ class Mesh_Potential_Initialization: NSObject {
         // Initializes first value of input potential list which is 0
         trial_pot_list.append(input_pot_list[0])
         
-        // Loops over every input potential value, converts r*(v(r) to V(r)
+        // Loops over every input potential value, converts r*(v(r)) to V(r)
         for i in 1 ..< (input_pot_list.count){
             let new_value: Double = input_pot_list[i]/scaled_r_list[i]
             trial_pot_list.append(new_value)
@@ -80,13 +80,14 @@ class Mesh_Potential_Initialization: NSObject {
     ///   - number_blocks: Number of blocks in mesh
     ///   - number_points: Number of points per block
     func initialize_KE_term_list(scaled_pot_list: [Double], scaled_r_list: [Double], l_quant_number: Double, input_energy: Double, number_blocks: Double, number_points: Double){
-        
+//        print("input energy = \(input_energy)")
+//        print("l=\(l_quant_number) and input energy = \(input_energy) and scaled_pot_list.count = \(scaled_pot_list.count) and scaled_r_list.count = \(scaled_r_list.count)")
         // Initializes first KE term value
         KE_term_list.append(scaled_pot_list[0] + input_energy)
         
         // Loops over each potential value, calculates Q(r) value and stores it in KE_term_list array
         for i in 1 ..< (scaled_pot_list.count){
-            
+//            print(i)
             // Calculates Q(r) (actually -Q(r))
             let new_gn_value: Double = -scaled_pot_list[i] - ((pow(l_quant_number, 2.0) + l_quant_number)/pow(scaled_r_list[i], 2.0)) + input_energy
             KE_term_list.append(new_gn_value)
@@ -143,6 +144,25 @@ class Mesh_Potential_Initialization: NSObject {
         self.initialize_r_mesh(number_blocks: number_blocks, x_to_r_scalar: x_to_r_scalar, delta_x_initial: delta_x_initial, number_points: number_points)
         self.initialize_pot_list(input_pot_list: input_pot_list, scaled_r_list: r_mesh, number_blocks: number_blocks, number_points: number_points)
         self.initialize_KE_term_list(scaled_pot_list: trial_pot_list, scaled_r_list: r_mesh, l_quant_number: l_quant_number, input_energy: input_energy, number_blocks: number_blocks, number_points: number_points)
+        
+    }
+    
+    /// Name: initialize_mesh_pot_KE_Photo
+    /// Description: Combines three previous functions into one to initialize r_mesh, trial_pot_list and KE_term_list at the same time.
+    ///
+    /// - Parameters:
+    ///   - number_blocks: Number of blocks in mesh
+    ///   - x_to_r_scalar: Scalar to go from x to r values
+    ///   - delta_x_initial: Initial step in x values
+    ///   - input_pot_list: Input potential values list (actually r*V(r))
+    ///   - l_quant_number: l quantum number
+    ///   - input_energy: Input trial energy
+    ///   - number_points: Number of points per block
+    func initialize_mesh_pot_KE_Photo(number_blocks: Double, x_to_r_scalar: Double, delta_x_initial: Double, input_pot_list: [Double], l_quant_number: Double, input_energy: Double, number_points: Double, interpolated_r_mesh: [Double]){
+        
+        self.initialize_r_mesh(number_blocks: number_blocks, x_to_r_scalar: x_to_r_scalar, delta_x_initial: delta_x_initial, number_points: number_points)
+        self.initialize_pot_list(input_pot_list: input_pot_list, scaled_r_list: interpolated_r_mesh, number_blocks: number_blocks, number_points: number_points)
+        self.initialize_KE_term_list(scaled_pot_list: trial_pot_list, scaled_r_list: interpolated_r_mesh, l_quant_number: l_quant_number, input_energy: input_energy, number_blocks: number_blocks, number_points: number_points)
         
     }
     

@@ -30,6 +30,7 @@ class Functional_Functions: NSObject {
         let check_list_length: Bool = x_list.count == g_list.count && x_list.count == s_list.count
         
         // switch case that uses check_list_length bool
+//        print(x_list.count, g_list.count)
         switch check_list_length {
             
         // if x, g and s lists are equal length (should be)
@@ -65,10 +66,10 @@ class Functional_Functions: NSObject {
             
         // if one of the lists aren't equal
         default:
-            print("list length's dont match")
+            print("list lengths dont match")
             
         }
-        
+//        print("finished forward numerov method")
         // returns y value tuple array
         return(yn_tuple_array)
     }

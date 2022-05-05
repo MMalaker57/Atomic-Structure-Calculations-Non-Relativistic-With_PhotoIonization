@@ -18,7 +18,7 @@ class Input_File: NSObject {
     ///
     /// - Parameter input_file_path: URL of 110 point potential input file
     /// - Returns: Returns tuple containing following information: out (atom name, Z, exchange_alpha, KEY, BETA, THRESH, mesh_count, MAXIT, KUT, RADION, BRATIO, XION, # core shells, #val shells, potential values, electron configuration)
-    func read_DAT_110pt_inputfile(input_file_string: String) -> (String, Double, Double, Int, Double, Double, Double, Int, Int, Double, Double, Double, Int, Int, [Double], [(quant_n: Double, quant_l: Double, quant_m: Double, numb_electrons: Double, trial_energy: Double)]) {
+    func read_DAT_110pt_inputfile(input_file_string: String) -> (String, Double, Double, Int, Double, Double, Double, Int, Int, Double, Double, Double, Int, Int, [Double], [(quant_n: Double, quant_l: Double, quant_m: Double, numb_electrons: Double, trial_energy: Double)], [Double]) {
         
         // Variables to store input file data
         var read_name: String = ""
@@ -36,6 +36,7 @@ class Input_File: NSObject {
         var read_core_electrons: Int = 0
         var read_val_electrons: Int = 0
         var read_pot_list: [Double] = []
+        var read_photo_list: [Double] = []
         var read_electron_config_array: [(quant_n: Double, quant_l: Double, quant_m: Double, numb_electrons: Double, trial_energy: Double)] = []
         
         
@@ -79,7 +80,6 @@ class Input_File: NSObject {
             read_RADION = Double(line03_params[7])!
             read_BRATIO = Double(line03_params[8])!
             read_exchange_alpha = Double(line03_params[9])!
-            
             // reads in 110pt pot as string, converts it to a list of Doubles
             let new_pot_string: String = Array(contents_array[3...13]).reduce("",+)
             var new_pot_string_array: [String] = new_pot_string.components(separatedBy: " ")
@@ -93,11 +93,17 @@ class Input_File: NSObject {
             read_core_electrons = Int(line15_params[1])!
             read_val_electrons = Int(line15_params[2])!
             read_XION = Double(line15_params[3])!
-            
+        
+            let new_photo_string: String = Array(contents_array[15...25]).reduce("",+)
+            var new_photo_string_array: [String] = new_photo_string.components(separatedBy: " ")
+            new_photo_string_array = new_photo_string_array.filter({$0 != ""})
+            read_photo_list = new_photo_string_array.map({Double($0)!})
+            print(new_photo_string_array)
             // Reads orbital quantum numbers and stores in read_electron_config_array
-            for i in 15..<contents_array.count-1 {
+            for i in 26..<contents_array.count-1 {
                 
                 // Filters out spaces and empty array elements
+                print(contents_array[i])
                 var electron_config_string: [String] = contents_array[i].components(separatedBy: " ")
                 electron_config_string = electron_config_string.filter({$0 != ""})
                 
@@ -105,11 +111,10 @@ class Input_File: NSObject {
                 
                 read_electron_config_array.append((quant_n: Double(quant_string_list[0])!, quant_l: Double(quant_string_list[1])!, quant_m: Double(quant_string_list[2])!, numb_electrons: Double(electron_config_string[1])!, trial_energy: Double(electron_config_string[2])!))
                 
-                
             }
             
         
-        return(read_name, read_z_value, read_exchange_alpha, read_KEY, read_BETA_TOL, read_THRESH, read_mesh_count, read_MAXIT, read_KUT, read_RADION, read_BRATIO, read_XION, read_core_electrons, read_val_electrons, read_pot_list, read_electron_config_array)
+        return(read_name, read_z_value, read_exchange_alpha, read_KEY, read_BETA_TOL, read_THRESH, read_mesh_count, read_MAXIT, read_KUT, read_RADION, read_BRATIO, read_XION, read_core_electrons, read_val_electrons, read_pot_list, read_electron_config_array, read_photo_list)
         
     }
     

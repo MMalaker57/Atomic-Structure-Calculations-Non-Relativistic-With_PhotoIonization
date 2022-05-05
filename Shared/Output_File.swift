@@ -52,6 +52,46 @@ class Output_File: NSObject {
         
     }
     
+    func photoIonOutput(atom_name: String, z_value: Double, photoIon_array: [(n: Double, l: Double, m: Double, hv: [Double], sigma: [Double])], stacked_sigma: (hv: [Double], sigma: [Double])){
+        var writeString: String = atom_name + " (Z=" + String(Int(z_value)) + ")\n\n" + "Orbital     hv                Sigma                log(Sigma)\n\n"
+        
+        // Variables to hold quantum number, number electrons and energy strings
+        var quantum_numbers_string: String = ""
+//        var number_electrons_string: String = ""
+//        var new_energy_string: String = ""
+        var hvString = ""
+        var sigmaString = ""
+        
+        // Variable to hold number of spaces between number of electrons and energy value string (makes output file look organized)
+        var spaces_count: Int = 0
+        
+        // For loop that loops over each tuple element in final_results_array and adds quantum number, number of electron and energy strings to 'writeString' string.
+        for i in stride(from: 0, to: photoIon_array.count, by: 1) {
+            
+            quantum_numbers_string = String(Int(photoIon_array[i].n)) + String(Int(photoIon_array[i].l)) + String(Int(photoIon_array[i].m))
+//            number_electrons_string = String(photoIon_array[i].number_electrons)
+//            new_energy_string = String(format: "%.4f", final_results_array[i].new_energy)
+            for energy in stride(from: 0, to: photoIon_array[i].hv.count, by: 1){
+                hvString = String(photoIon_array[i].hv[energy])
+                sigmaString = String(photoIon_array[i].sigma[energy])
+                writeString += " " + quantum_numbers_string + "        " + hvString + "        " + sigmaString + "        " + String(log(photoIon_array[i].sigma[energy])) + "\n"
+            }
+            writeString += "\n"
+            // Calculates number of spaces needed between number of electrons string and energy string to line up columns (makes output file look organized)
+            
+        }
+        
+        for i in stride(from: 0, to: stacked_sigma.hv.count, by: 1){
+            writeString += " Stacked " + String(stacked_sigma.hv[i]) + "      " + String(stacked_sigma.sigma[i]) + "      " + String(log(stacked_sigma.sigma[i])) + "\n"
+        }
+        
+        // Writes 'writeString' string to energy output file
+        
+        myHartreeFockSCFCalculator!.plotDataModel!.calculatedText.append(writeString)
+        
+        
+    }
+    
     /// Name: make_wf_pot_output_file
     /// Description:
     ///
@@ -60,7 +100,7 @@ class Output_File: NSObject {
     ///   - z_value: Z value of atom
     ///   - final_results_array: Array of containing r, wave function, quantum numbers, number of electrons and energy values for each orbital
     ///   - self_consistent_pot_list: Final self-consistent potential list
-    func make_wf_pot_output_file(atom_name: String, z_value: Double, final_results_array: [(r_list: [Double], psi_list: [Double], quant_n: Double, quant_l: Double, quant_m: Double, number_electrons: Double, new_energy: Double)], self_consistent_pot_list: [Double]) {
+    func make_wf_pot_output_file(atom_name: String, z_value: Double, final_results_array: [(r_list: [Double], psi_list: [Double], quant_n: Double, quant_l: Double, quant_m: Double, number_electrons: Double, new_energy: Double)], self_consistent_pot_list: [Double], r_mesh: [Double]) {
         
         // energy corrections instance, used to call energy correction functions
         let output_functional_functions_inst = myHartreeFockSCFCalculator!.functional_functions_inst
@@ -78,7 +118,7 @@ class Output_File: NSObject {
         // POTENTIAL SECTION
         
         // First two lines of file, name and Z value of atom, and category names
-        var writeString: String = atom_name + " (Z=" + String(Int(z_value)) + ")\n\n" + "Modified Herman-Skillman Potential Values r*V(r)\n\n"
+        var writeString: String = atom_name + " (Z=" + String(Int(z_value)) + ")\n\n" + "Modified Herman-Skillman Potential Values V(r)\n\n"
         
         // Finds multiplicity and remainder of potential list (length of potential list divided by 5 and remainder)
         let potential_count: Int = self_consistent_pot_list.count
@@ -142,6 +182,70 @@ class Output_File: NSObject {
         }
         
         
+        writeString += "List of r Values: \n"
+        let r_count: Int = r_mesh.count
+        let r_count_multiplicity: Int = r_count/5
+        let r_count_remainder: Int = r_count%5
+        let end_multiplicity_r_count: Int = r_count_multiplicity*5
+        print(r_count, r_count_multiplicity, r_count_remainder, end_multiplicity_r_count)
+        
+        // Converts each value of potential list to a string in scientific notation (7 sig figs) in sets of 5 and adds to 'writeString' string as one line of string, line number at the end of every line starting after the 80th character (if there was an empty line, there would be 80 spaces then the line number so they all line up in a column).
+        for i in stride(from: 0, to: end_multiplicity_r_count, by: 5) {
+            
+            temp_variable1 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[i], number_of_sigfigs: 7)
+            temp_variable2 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[i+1], number_of_sigfigs: 7)
+            temp_variable3 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[i+2], number_of_sigfigs: 7)
+            temp_variable4 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[i+3], number_of_sigfigs: 7)
+            temp_variable5 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[i+4], number_of_sigfigs: 7)
+            
+            writeString += temp_variable1 + "  " + temp_variable2 + "  " + temp_variable3 + "  " + temp_variable4 + "  " + temp_variable5 + "  " + String(i/5 + 1) + "\n"
+            
+        }
+        
+        // Switch case based on remaining potential values.  Each potential value in string form is 14 character's with 2 spaces between each which changes the amount of spaces needed between the last potential value and line number.  (If remainder is 1, 80 - 14 = 66 so there would need to be 66 spaces between the last potential value and its line number)
+        switch potential_count_remainder {
+            
+        // 1 potential value left
+        case 1:
+            
+            temp_variable1 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count], number_of_sigfigs: 7)
+            writeString += temp_variable1 + String(repeating: " ", count: 66) + String(r_count_multiplicity + 1) + "\n\n"
+            
+        // 2 potential values left
+        case 2:
+            
+            temp_variable1 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count], number_of_sigfigs: 7)
+            temp_variable2 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count+1], number_of_sigfigs: 7)
+            writeString += temp_variable1 + "  " + temp_variable2 + String(repeating: " ", count: 50) + String(r_count_multiplicity + 1) + "\n\n"
+            
+        // 3 potential values left
+        case 3:
+            
+            temp_variable1 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count], number_of_sigfigs: 7)
+            temp_variable2 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count+1], number_of_sigfigs: 7)
+            temp_variable3 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count+2], number_of_sigfigs: 7)
+            writeString += temp_variable1 + "  " + temp_variable2 + "  " + temp_variable3 + String(repeating: " ", count: 34) + String(r_count_multiplicity + 1) + "\n\n"
+            
+        // 4 potential values left
+        case 4:
+            
+            temp_variable1 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count], number_of_sigfigs: 7)
+            temp_variable2 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count+1], number_of_sigfigs: 7)
+            temp_variable3 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count+2], number_of_sigfigs: 7)
+            temp_variable4 = output_functional_functions_inst.double_to_scientific_string(double_input: r_mesh[end_multiplicity_r_count+3], number_of_sigfigs: 7)
+            writeString += temp_variable1 + "  " + temp_variable2 + "  " + temp_variable3 + "  " + temp_variable4 + String(repeating: " ", count: 18) + String(r_count_multiplicity + 1) + "\n\n"
+        
+        default:
+            
+            writeString += "\n"
+            print("either remainder is 0 or somethings wrong")
+            
+        }
+            
+            
+            
+            
+            
         // WAVEFUNCTION SECTION
         
         // Adds section title to 'writeString' string indicating wave function section
