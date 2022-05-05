@@ -651,7 +651,7 @@ class Self_Consistent_Potentials: NSObject {
                             if(state_energy < 0.003){
                                 state_energy = 0.0
                             }
-                            potential_schrod_eq_subroutine_inst.schroedinger_photoionization_subroutine(z_value: z_value, trial_energy: i.trial_energy+photon_energy, number_blocks: number_of_blocks, l_number: i.quant_l-1, number_points: number_points, initial_delta_x: delta_x_initial, mesh_scalar: scalar, principal_quant_number: i.quant_n, input_pot_list: user_input_pot_list, thresh_criterion: thresh_criterion, max_thresh_iterations: max_thresh_iterations, left_energy_scalar: left_energy_scalar, right_energy_scalar: right_energy_scalar, r_list: interpolated_r_mesh)
+                            potential_schrod_eq_subroutine_inst.schroedinger_photoionization_subroutine(z_value: z_value, trial_energy: state_energy, number_blocks: number_of_blocks, l_number: i.quant_l-1, number_points: number_points, initial_delta_x: delta_x_initial, mesh_scalar: scalar, principal_quant_number: i.quant_n, input_pot_list: interpolated_Potential, thresh_criterion: thresh_criterion, max_thresh_iterations: max_thresh_iterations, left_energy_scalar: left_energy_scalar, right_energy_scalar: right_energy_scalar, r_list: interpolated_r_mesh)
                             
                             for i in potential_wavefunction_values_inst.norm_Pwavefunction_tuple_array {
                                 for j in i.wavefunction_list {
@@ -662,7 +662,11 @@ class Self_Consistent_Potentials: NSObject {
                             
                             
                         }
-                        
+                        var unpackedTuple = unpack_r_and_wavefunction(codex: interpolation_codex, r_values: r_list, psi_values: psi_list)
+                        if(unpackedTuple.r_values.count == 0 || unpackedTuple.psi_values.count == 0){
+                            unpackedTuple.r_values.append(0.0)
+                            unpackedTuple.psi_values.append(0.0)
+                        }
                         // Appends calculated radius and wavefunction values to r and psi list
                         
                         // Adds values to results array

@@ -484,12 +484,12 @@ struct ContentView: View {
         
         element = hartreeFockSCFCalculator.element
         plotDataModel.fileName = element
-        
-        for i in stride(from: 0, through: mesh.count - 2, by: 1){
-            print(i, mesh[i+1]-mesh[i], potential[i+1]-potential[i])
-            
-        }
-        
+//        
+//        for i in stride(from: 0, through: mesh.count - 2, by: 1){
+//            print(i, mesh[i+1]-mesh[i], potential[i+1]-potential[i])
+//            
+//        }
+//        
         
         
         updateWavefunctionPlot(index: 0)

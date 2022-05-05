@@ -15,12 +15,9 @@ class R_Element_Calculator: NSObject {
     /// - Psi_I: The initial wavefunction in form of r, psi(r), n, l, m, numer_electorns, new_energy
     /// - Psi_F: The final wavefunction in form of r, psi(r), n, l, m, number_electrons, photon_energy, new_energy
     func calculateR(Psi_I:(r_list: [Double], psi_list: [Double], quant_n: Double, quant_l: Double, quant_m: Double, number_electrons: Double, new_energy: Double), Psi_F: (r_list: [Double], psi_list: [Double], quant_n: Double, quant_l: Double, quant_m: Double, number_electrons: Double, photo_energy: Double, new_energy: Double), plusOrMinus: Bool)->Double{
-    
 
         var integral = 0.0
         var len = 1
-
-        
 
         if(Psi_I.r_list.count < Psi_F.r_list.count){
             len = Psi_I.r_list.count-2
@@ -33,7 +30,7 @@ class R_Element_Calculator: NSObject {
         //This leads to NaNs at index 0, which should be zero in reality.
         //Accelerate is used to, well, accelerate this process
         
-        print(Psi_I.quant_n, Psi_I.quant_l, Psi_I.quant_m, Psi_F.photo_energy, Psi_F.psi_list.count, Psi_F.r_list.count)
+//        print(Psi_I.quant_n, Psi_I.quant_l, Psi_I.quant_m, Psi_F.photo_energy, Psi_F.psi_list.count, Psi_F.r_list.count)
         var initial_psi = vDSP.divide(Psi_I.psi_list, Psi_I.r_list)
         var final_psi = vDSP.divide(Psi_F.psi_list, Psi_F.r_list)
         initial_psi[0] = 0.0
