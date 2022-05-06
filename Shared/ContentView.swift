@@ -489,7 +489,8 @@ struct ContentView: View {
 //            print(i, mesh[i+1]-mesh[i], potential[i+1]-potential[i])
 //            
 //        }
-//        
+//
+        
         
         
         updateWavefunctionPlot(index: 0)

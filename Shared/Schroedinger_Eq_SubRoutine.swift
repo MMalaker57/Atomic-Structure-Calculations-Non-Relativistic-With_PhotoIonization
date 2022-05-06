@@ -1242,6 +1242,8 @@ class Schroedinger_Eq_SubRoutine: NSObject {
             
             temp_wavefunction_tuple_array.append((r_value: schroed_wavefunction_values_inst.outward_Pwavefunction_tuple_array[0].wavefunction_list[j].r_value, wavefunction_value: schroed_wavefunction_values_inst.outward_Pwavefunction_tuple_array[0].wavefunction_list[j].wavefunction_value*outward_normalization_constant))
         }
+    
+        
         
         schroed_wavefunction_values_inst.norm_Pwavefunction_tuple_array.append((wavefunction_list: temp_wavefunction_tuple_array, block_number: 0))
         

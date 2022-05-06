@@ -594,6 +594,7 @@ class Self_Consistent_Potentials: NSObject {
                             }
                         }
                         
+                        
                         //Unpack fine wavefunction to coarser grind for integration
                         unpackedTuple = unpack_r_and_wavefunction(codex: interpolation_codex, r_values: r_list, psi_values: psi_list)
                         if(unpackedTuple.r_values.count == 0 || unpackedTuple.psi_values.count == 0){
