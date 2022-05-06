@@ -123,6 +123,8 @@ class HermanSkillmanCalculator: ObservableObject {
         results_array_For_l_Plus_One = results_array_tuple_photo.0
         results_array_For_l_Minus_One = results_array_tuple_photo.1
         
+        print(results_array_For_l_Minus_One.count, results_array_For_l_Plus_One.count)
+        
         
         // Ends timing of main section of code
         let t2 = mach_absolute_time()

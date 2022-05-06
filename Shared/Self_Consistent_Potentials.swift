@@ -523,6 +523,9 @@ class Self_Consistent_Potentials: NSObject {
             var r_list: [Double] = []
             let input_mesh = r_mesh
             var psi_list: [Double] = []
+
+        var unpackedTuple: (r_values: [Double], psi_values: [Double]) = (r_values: [], psi_values: [])
+       
             var full_mesh: [Double] = []
             
             // Sets a range for the expected energy
@@ -561,15 +564,11 @@ class Self_Consistent_Potentials: NSObject {
                         //l+1
                         r_list = []
                         psi_list = []
-    //                    print("trial energy = \(i.trial_energy)")
-    //                    print("hv = \(photon_energy)")
-    //                    print("trial energy + hv = \(i.trial_energy+photon_energy)")
-                        
-                        
+                     
                         if(state_energy < 0){
 //                            print("state_energy = \(state_energy), n = \(Int(i.quant_n)), l+1 = \(Int(i.quant_l+1.0)) triggered negative state energy")
 //                            print("l+1 number of blocks = \(number_of_blocks), number_points = \(number_points)")
-//                        potential_schrod_eq_subroutine_inst.schroedinger_subroutine(z_value: z_value, trial_energy: state_energy, number_blocks: number_of_blocks, l_number: i.quant_l+1, number_points: number_points, initial_delta_x: delta_x_initial, mesh_scalar: scalar, principal_quant_number: i.quant_n, input_pot_list: user_input_pot_list, thresh_criterion: thresh_criterion, max_thresh_iterations: max_thresh_iterations, left_energy_scalar: left_energy_scalar, right_energy_scalar: right_energy_scalar)
+
                             
                             for i in stride(from: 0, to: interpolated_r_mesh.count, by: 1){
                                 
@@ -596,7 +595,7 @@ class Self_Consistent_Potentials: NSObject {
                         }
                         
                         //Unpack fine wavefunction to coarser grind for integration
-                        var unpackedTuple = unpack_r_and_wavefunction(codex: interpolation_codex, r_values: r_list, psi_values: psi_list)
+                        unpackedTuple = unpack_r_and_wavefunction(codex: interpolation_codex, r_values: r_list, psi_values: psi_list)
                         if(unpackedTuple.r_values.count == 0 || unpackedTuple.psi_values.count == 0){
                             unpackedTuple.r_values.append(0.0)
                             unpackedTuple.psi_values.append(0.0)
@@ -626,56 +625,48 @@ class Self_Consistent_Potentials: NSObject {
                         psi_list = []
                         
                         if(i.quant_l-1.0 < 0.0){
-                        r_list.append(0.0)
+                            r_list.append(0.0)
                             psi_list.append(0.0)
-                    }
-                    else{
-                        
-                        if(state_energy < 0){
-//                            print("state_energy = \(state_energy), n = \(Int(i.quant_n)), l-1 = \(Int(i.quant_l-1.0)) triggered negative state energy")
-                            for i in stride(from: 0, to: input_mesh.count, by: 1){
-                                
-                                r_list.append(input_mesh[i])
-                                psi_list.append(0.0)
-                            }
-                            
-                            
-    //                        print("l-1 number of blocks = \(number_of_blocks), number_points = \(number_points)")
-//
-                            
                         }
                         else{
-//                            print("state_energy = \(state_energy), n = \(Int(i.quant_n)), l-1 = \(Int(i.quant_l-1.0)) triggered positive state energy")
-//                            print("input_pot_list for l-1 is \(input_pot_list.count) long")
-    //                        print("l-1 number of blocks = \(number_of_blocks), number_points = \(number_points)")
-                            if(state_energy < 0.003){
-                                state_energy = 0.0
-                            }
-                            potential_schrod_eq_subroutine_inst.schroedinger_photoionization_subroutine(z_value: z_value, trial_energy: state_energy, number_blocks: number_of_blocks, l_number: i.quant_l-1, number_points: number_points, initial_delta_x: delta_x_initial, mesh_scalar: scalar, principal_quant_number: i.quant_n, input_pot_list: interpolated_Potential, thresh_criterion: thresh_criterion, max_thresh_iterations: max_thresh_iterations, left_energy_scalar: left_energy_scalar, right_energy_scalar: right_energy_scalar, r_list: interpolated_r_mesh)
                             
-                            for i in potential_wavefunction_values_inst.norm_Pwavefunction_tuple_array {
-                                for j in i.wavefunction_list {
-                                    r_list.append(j.r_value)
-                                    psi_list.append(j.wavefunction_value)
-                                }
-                            }
-                            
-                            
-                        }
-                        var unpackedTuple = unpack_r_and_wavefunction(codex: interpolation_codex, r_values: r_list, psi_values: psi_list)
-                        if(unpackedTuple.r_values.count == 0 || unpackedTuple.psi_values.count == 0){
-                            unpackedTuple.r_values.append(0.0)
-                            unpackedTuple.psi_values.append(0.0)
-                        }
-                        // Appends calculated radius and wavefunction values to r and psi list
-                        
-                        // Adds values to results array
-//                        print("l-1 r_list is \(r_list.count) long and psi_list is \(psi_list.count) long")
-                        
-                        }
-                        results_array_For_l_Minus_One.append((r_list: r_list, psi_list: psi_list, quant_n: i.quant_n, quant_l: i.quant_l, quant_m: i.quant_m, number_electrons: i.numb_electrons, photo_energy: photon_energy, new_energy: state_energy-photon_energy))
-                        full_mesh = potential_mesh_potential_init_inst.r_mesh
+                            if(state_energy < 0){
 
+                                for i in stride(from: 0, to: input_mesh.count, by: 1){
+                                    
+                                    r_list.append(input_mesh[i])
+                                    psi_list.append(0.0)
+                                }
+
+                            }
+                            else{
+
+                                if(state_energy < 0.003){
+                                    state_energy = 0.0
+                                }
+                                potential_schrod_eq_subroutine_inst.schroedinger_photoionization_subroutine(z_value: z_value, trial_energy: state_energy, number_blocks: number_of_blocks, l_number: i.quant_l-1, number_points: number_points, initial_delta_x: delta_x_initial, mesh_scalar: scalar, principal_quant_number: i.quant_n, input_pot_list: interpolated_Potential, thresh_criterion: thresh_criterion, max_thresh_iterations: max_thresh_iterations, left_energy_scalar: left_energy_scalar, right_energy_scalar: right_energy_scalar, r_list: interpolated_r_mesh)
+                                
+                                for i in potential_wavefunction_values_inst.norm_Pwavefunction_tuple_array {
+                                    for j in i.wavefunction_list {
+                                        r_list.append(j.r_value)
+                                        psi_list.append(j.wavefunction_value)
+                                    }
+                                }
+
+                            }
+                            
+                            }
+                        //Unpack fine wavefunction to coarser grid for integration
+                        if(r_list.count > 441){
+//                            print("unpacking")
+                            unpackedTuple = unpack_r_and_wavefunction(codex: interpolation_codex, r_values: r_list, psi_values: psi_list)
+                            if(unpackedTuple.r_values.count == 0 || unpackedTuple.psi_values.count == 0){
+                                unpackedTuple.r_values.append(0.0)
+                                unpackedTuple.psi_values.append(0.0)
+                            }
+                        }
+                        results_array_For_l_Minus_One.append((r_list: unpackedTuple.r_values, psi_list: unpackedTuple.psi_values, quant_n: i.quant_n, quant_l: i.quant_l, quant_m: i.quant_m, number_electrons: i.numb_electrons, photo_energy: photon_energy, new_energy: state_energy-photon_energy))
+                        full_mesh = potential_mesh_potential_init_inst.r_mesh
                         potential_mesh_potential_init_inst.KE_term_list.removeAll()
                         potential_mesh_potential_init_inst.r_mesh = [0.0]
                         potential_mesh_potential_init_inst.trial_pot_list.removeAll()
@@ -688,9 +679,10 @@ class Self_Consistent_Potentials: NSObject {
                         potential_wavefunction_values_inst.outward_log_deriv_integral_values.removeAll()
                         potential_wavefunction_values_inst.norm_Pwavefunction_tuple_array.removeAll()
 
+                        full_mesh = potential_mesh_potential_init_inst.r_mesh
+
                     }
                     
-                    full_mesh = potential_mesh_potential_init_inst.r_mesh
                     
                     
                 }
